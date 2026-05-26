@@ -1,0 +1,22 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { useEffect } from "react";
+import { useNavigate } from "@tanstack/react-router";
+import { useAuth } from "@/hooks/useAuth";
+
+export const Route = createFileRoute("/")({
+  component: Index,
+});
+
+function Index() {
+  const { user, loading } = useAuth();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (loading) return;
+    navigate({ to: user ? "/dashboard" : "/login" });
+  }, [user, loading, navigate]);
+  return (
+    <div className="min-h-screen grid place-items-center bg-background text-muted-foreground">
+      Loading CDI…
+    </div>
+  );
+}
